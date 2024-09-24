@@ -198,57 +198,36 @@
 
        
     <div class="tooltips" title="Please select the District">
-        <select class='form-control' id = "district" onchange="districtProjects()">
+        <select class='form-control' id = "district" >
           <option value=""> Select District</option>
          </select>
     </div>
     &nbsp;&nbsp;
-     <div class="tooltips" title="Please select Sector">
-       <select class='form-control' id="sector" name="sector" onchange="sector()">
+     <div class="tooltips" title="Please select GCP types">
+       <select class='form-control' id="sector" name="sector" >
            <option value="All">Sector:All</option>
            <optgroup label="Sector"> 
              <!-- <option value="education" onclick="education()">Education</option> -->
-             <option value="education" >Education</option>
-               <option value="healthcare" >HealthCare</option>
-               
-   
-         </select> 
-        </div>
+             <option value="Primary" >Primary</option>
+             <option value="Primary_Puxillairy" >Primary Auxilliary</option>
+             <option value="Secondary" >Secondary</option>
+             <option value="Secondary_aux" >Secondary Auxilliary</option>
+             <option value="tertiary" >Tertiary</option>
+             <option value="soi" >SOI</option>
+             <option value="Auxillary" >Auxilliary</option>
+        </select> 
+      </div>
         
-    &nbsp;&nbsp;
-    <div class="tooltips">
-      <select class='form-control' id="fy" name="fy" onchange="fy()">
-        <!-- {% for entry in fy %}
-            <option value="{{ entry }}" onclick="fy()">{{ entry }}</option>
-        {% endfor %} -->
-        <option value="All">Financial Year:All</option>
-        <option value="2014-15" > 2014-15</option>
-        <option value="2015-16"> 2015-16</option>
-        <option value="2016-17"> 2016-17</option>
-        <option value="2017-18"> 2017-18</option>
-        <option value="2018-19"> 2018-19</option>
-        <option value="2019-20"> 2019-20</option>
-        <option value="2020-21"> 2020-21</option>
-        <option value="2021-22"> 2021-22</option>
-        </select>
-    </div>
-    &nbsp;&nbsp;
-    <!-- <div class="tooltips">
-      <select class='form-control' id="submission_date" name="submission_date">
-        {% for entry in coalform %}
-          <option value="{{ entry.submission_date }}" onclick="submission_date()">{{ entry.submission_date }}</option>
-        {% endfor %}
-      </select>
-    </div> -->
-  </div>
+   
+  </div><!-- //navigated AREA -->
   <div style="text-align: center"> 
     <button style="display: inline-block ;position: relative;top: 100px" id="closebutton" name="closebutton" class="btn btn-secondary"><span class="fa fa-power-off"></span></button> 
-</div>
+  </div>
 
-<div >
-<b style="text-align: right; color: black; font-style: italic; font-size: small; "><p style="position: absolute; bottom: 5; left: 5;">        Default map displays recently updated data</p></b>
-</div>
-</div>
+  <div >
+    <b style="text-align: right; color: black; font-style: italic; font-size: small; "><p style="position: absolute; bottom: 5; left: 5;">        Default map displays recently updated data</p></b>
+  </div>
+</div><!--//SIDE BAR -->
 <div id="mapid" style="width: 100%; height: 90%;"></div>
 
   <!-- Modal Structure -->
@@ -268,924 +247,38 @@
   </div> 
   
 </div> 
-<!-- <div id="map_canvas"></div> -->
-<!-- <input type ="button" onclick='window.open("{{ i.commpendium.url }}", "width=5,height=5,top=1,left=5", "_self")' value="Open Compendium"> -->
-
-
-
-<!-- var marker= {}; -->
-<script>
-  var pvIcon = L.icon({
-         iconUrl: "{% static 'map/images/Coal_India_Logo.png' %}",
-         iconSize:     [40, 40], // size of the icon
-         //shadowSize:   [50, 64], // size of the shadow
-         iconAnchor:   [25,10], // point of the icon which will correspond to marker's location
-         // shadowAnchor: [4, 62],  // the same for the shadow
-         popupAnchor:  [0, 0] // point from which the popup should open relative to the iconAnchor
-     });
-     var iconState = L.icon({
-      // iconUrl: "{% static 'map/images/coal_india_state.png' %}",
-      iconUrl: "{% static 'map/images/coal_india_icon.png' %}",
-      iconSize:     [40, 40], // size of the icon
-      //shadowSize:   [50, 64], // size of the shadow
-      iconAnchor:   [25,10], // point of the icon which will correspond to marker's location
-      // shadowAnchor: [4, 62],  // the same for the shadow
-      popupAnchor:  [0, 0] // point from which the popup should open relative to the iconAnchor
-  });
-  var iconDistrict = L.icon({
-      // iconUrl: "{% static 'map/images/coal_india_district.png' %}",
-      iconUrl: "{% static 'map/images/coal_india_icon.png' %}",
-      iconSize:     [40, 40], // size of the icon
-      //shadowSize:   [50, 64], // size of the shadow
-      iconAnchor:   [25,10], // point of the icon which will correspond to marker's location
-      // shadowAnchor: [4, 62],  // the same for the shadow
-      popupAnchor:  [0, 0] // point from which the popup should open relative to the iconAnchor
-  });
-  var iconFy = L.icon({
-      // iconUrl: "{% static 'map/images/coal_india_fy.png' %}",
-      iconUrl: "{% static 'map/images/coal_india_icon.png' %}",
-      iconSize:     [40, 40], // size of the icon
-      //shadowSize:   [50, 64], // size of the shadow
-      iconAnchor:   [25,10], // point of the icon which will correspond to marker's location
-      // shadowAnchor: [4, 62],  // the same for the shadow
-      popupAnchor:  [0, 0] // point from which the popup should open relative to the iconAnchor
-  });
-  var iconSector = L.icon({
-      // iconUrl: "{% static 'map/images/coal_india_sector.png' %}",
-      iconUrl: "{% static 'map/images/coal_india_icon.png' %}",
-      iconSize:     [40, 40], // size of the icon
-      //shadowSize:   [50, 64], // size of the shadow
-      iconAnchor:   [25,10], // point of the icon which will correspond to marker's location
-      // shadowAnchor: [4, 62],  // the same for the shadow
-      popupAnchor:  [0, 0] // point from which the popup should open relative to the iconAnchor
-  });   
-  var sectorlayerGroup = L.layerGroup();
-  
-</script>
-<script>var sectorlayerGroup1 = L.layerGroup();</script>
-
-
-<!-- education sector -->
-
-<!-- <script>
-  var marker = {};
-  function education(){
-    // mymap.removeLayer(marker);
-    // sectorlayerGroup1.clearlayers();
-    `{% for s in s1 %}`
-    var table4 = 
-      
-      `<table class="w3-table" id="popup" style="font-size:12px; align:center;" >
-        <tbody>
-      
-        {% if s.project_name %}
-        <tr>
-            <th><b>Project name</b></th>
-            <th><b>{{ s.project_name}}</b></th>
-        </tr>
-        {% endif %}
-        
-        {% if s.inputState %}
-        <tr>
-          <td>State</td>
-          <td>{{ s.inputState}}</td>
-        </tr>
-        {% endif %}
-        {% if s.inputDistrict %}
-        <tr>
-          <td>District</td>
-          <td>{{ s.inputDistrict }}</td>
-        </tr>
-        {% endif %}
-        {% if s.agencytype %}
-        <tr>
-          <td>Implementing Agency</td>
-          <td>{{ s.agencytype}}</td>
-        </tr>
-        {% endif %}
-        
-        {% if s.Projectstatus %}
-        <tr>
-          <td>Project Status</td>
-          <td>{{ s.Projectstatus }}</td>
-        </tr>
-        {% endif %}
-        
-        <tr>
-          {% if s.commpendium %}
-            <td><a href="{{ s.commpendium.url }}" target = "_app"><img src="../static/map/images/icons8-pdf-40.png"/></a></td>
-            
-             
-          {% endif %}
-          {% if s.picture %}
-            <td><a href="{{ s.picture.url }}" class = "popupimage2" target = "_app"><img src="../static/map/images/icons8-image-48.png"/></a></td>
-          {% else %}
-            <td><img src="../static/map/images/icons8-image-48.png"/></td>
-          
-          
-            {% endif %}  
-          
-            <td><a href="download/{{ s.id }}"><img src="../static/map/images/icons8-microsoft-excel-48.png" /></a></td>
-             
-          
-          
-          </tr>  
-      </tbody>
- </table>
- 
- </br>`
-    var sector = document.getElementById('sector').value;
-    console.log(sector);
-    
-    var popupOptions =
-     {
-       'maxWidth': '500',
-       'className' : 'another-popup' // classname for another popup
-     }
-    // var marker = L.marker(["{{ s.lat }}", "{{ s.lng }}"], {icon:pvIcon1}).addTo(mymap); 
-    var marker = L.marker(["{{ s.lat }}", "{{ s.lng }}"], {icon:iconSector}).addTo(mymap).bindPopup(table4, popupOptions);
-    // console.log(marker);
-    sectorlayerGroup.addLayer(marker);
-    marker.on('click', function (e) {
-           this.openPopup(e.latlng);
-     });
-     mymap.on ({
-         click: function() {
-             isClicked = false
-         },
-         popupclose: function () {
-             isClicked = false
-         }
-     })
-    // console.log(sectorlayerGroup);
-    `{% endfor %}`
-  } -->
-<!-- 
-// healthcare sector
-  function healthcare(){
-    mymap.removeLayer(sectorlayerGroup);
-    sectorlayerGroup.clearLayers();
-    `{% for s in s2 %}`
-    var table4 = 
-      
-      `<table class="w3-table" id="popup" style="font-size:12px; align:center;" >
-        <tbody>
-      
-        {% if s.project_name %}
-        <tr>
-            <th><b>Project name</b></th>
-            <th><b>{{ s.project_name}}</b></th>
-        </tr>
-        {% endif %}
-        
-        {% if s.inputState %}
-        <tr>
-          <td>State</td>
-          <td>{{ s.inputState}}</td>
-        </tr>
-        {% endif %}
-        {% if s.inputDistrict %}
-        <tr>
-          <td>District</td>
-          <td>{{ s.inputDistrict }}</td>
-        </tr>
-        {% endif %}
-        {% if s.agencytype %}
-        <tr>
-          <td>Implementing Agency</td>
-          <td>{{ s.agencytype}}</td>
-        </tr>
-        {% endif %}
-        
-        {% if s.Projectstatus %}
-        <tr>
-          <td>Project Status</td>
-          <td>{{ s.Projectstatus }}</td>
-        </tr>
-        {% endif %}
-        
-        <tr>
-          {% if s.commpendium %}
-            <td><a href="{{ s.commpendium.url }}" target = "_app"><img src="../static/map/images/icons8-pdf-40.png"/></a></td>
-            
-             
-          {% endif %}
-          {% if s.picture %}
-            <td><a href="{{ s.picture.url }}" class = "popupimage2" target = "_app"><img src="../static/map/images/icons8-image-48.png"/></a></td>
-          {% else %}
-            <td><img src="../static/map/images/icons8-image-48.png"/></td>
-          
-          
-            {% endif %}  
-          
-            <td><a href="download/{{ s.id }}"><img src="../static/map/images/icons8-microsoft-excel-48.png" /></a></td>
-             
-          
-          
-          </tr>  
-      </tbody>
- </table>
- 
- </br>`
-    var sector = document.getElementById('sector').value;
-    console.log(sector);
-    console.log(sectorlayerGroup);
-    mymap.removeLayer(sectorlayerGroup);
-    sectorlayerGroup.clearLayers();
-    var popupOptions =
-     {
-       'maxWidth': '500',
-       'className' : 'another-popup' // classname for another popup
-     }
-    
-    // var marker = L.marker(["{{ s.lat }}", "{{ s.lng }}"], {icon:pvIcon1}).addTo(mymap); 
-    var marker = L.marker(["{{ s.lat }}", "{{ s.lng }}"], {icon:iconSector}).addTo(mymap).bindPopup(table4, popupOptions);
-    // console.log(marker);
-    // sectorlayerGroup1.addLayer(marker);
-    marker.addTo(mymap);
-    console.log(sectorlayerGroup1);
-    marker.on('click', function (e) {
-           this.openPopup(e.latlng);
-     });
-     mymap.on ({
-         click: function() {
-             isClicked = false
-         },
-         popupclose: function () {
-             isClicked = false
-         }
-     })
-     
-    `{% endfor %}`
-  }
-</script> -->
-
-
-
-<script>var sectorlayerGroup2 = L.layerGroup();</script>
-<script>var sectorlayerGroup3 = L.layerGroup();</script>
-
-<script>
-  var markerlist=[];
-  function fy(){
-    console.log("markerlist in sector:",markerlist);
-    // debugger;
-    clear_marker();
-    console.log(markerlist);
-    // sectorlayerGroup2.removeLayer(marker);
-    
-    var fy = document.getElementById('fy').value;
-    var state = document.getElementById('indstate').value;
-    var district = document.getElementById('district').value;
-
-    console.log(fy);
-    console.log(state);
-    console.log(district);
-
-    `{% for i in coalform %}`
-    // if `{{i.fy}}` is  fy:
-    var table4 = 
-      
-      `<table class="w3-table" id="popup" style="font-size:12px; align:center;" >
-        <tbody>
-      
-        {% if i.project_name %}
-        <tr>
-            <th><b>Project name</b></th>
-            <th><b>{{ i.project_name}}</b></th>
-        </tr>
-        {% endif %}
-        
-        {% if i.inputState %}
-        <tr>
-          <td>State</td>
-          <td>{{ i.inputState}}</td>
-        </tr>
-        {% endif %}
-        {% if i.inputDistrict %}
-        <tr>
-          <td>District</td>
-          <td>{{ i.inputDistrict }}</td>
-        </tr>
-        {% endif %}
-        {% if i.agencytype %}
-        <tr>
-          <td>Implementing Agency</td>
-          <td>{{ i.agencytype}}</td>
-        </tr>
-        {% endif %}
-        
-        {% if i.Projectstatus %}
-        <tr>
-          <td>Project Status</td>
-          <td>{{ i.Projectstatus }}</td>
-        </tr>
-        {% endif %}
-        
-        <tr>
-          {% if i.commpendium %}
-            <td><a href="{{ i.commpendium.url }}" target = "_app"><img src="../static/map/images/icons8-pdf-40.png" style="height:48;width:48"/></a></td>
-            
-             
-          {% endif %}
-          {% if i.picture %}
-            <td><a href="{{ i.picture.url }}" class = "popupimage2" target = "_app"><img src="../static/map/images/icons8-image-48.png" style="height:48;width:48"/></a></td>
-          {% else %}
-            <td><img src="../static/map/images/icons8-image-48.png" style="height:48;width:48"/></td>
-          
-          
-            {% endif %}  
-          
-            <td><a href="download/{{ i.id }}"><img src="../static/map/images/icons8-microsoft-excel-48.png" style="height:48;width:48" /></a></td>
-             
-          
-          
-          </tr>  
-      </tbody>
- </table>
- 
- </br>`
- var popupOptions =
-     {
-       'maxWidth': '500',
-       'className' : 'another-popup' // classname for another popup
-     }
-     if(fy == "{{i.fy}}" && state == '{{i.inputState}}' && district == '{{i.inputDistrict}}'){
-      console.log("{{i.fy}}","{{i.inputState}}","{{i.inputDistrict}}");
-      // var marker = L.marker(["{{ i.lat }}", "{{ i.lng }}"], {icon:pvIcon1}).addTo(mymap); 
-      var marker = L.marker(["{{ i.lat }}", "{{ i.lng }}"], {icon:iconFy}).addTo(mymap).bindPopup(table4, popupOptions);
-
-      console.log(marker);
-      // sectorlayerGroup2.addLayer(marker);
-      marker.addTo(mymap);
-      markerlist.push(marker);
-      console.log(markerlist);
-      // mymap.removeLayer(marker);
-    // console.log(sectorlayerGroup2);
-    marker.on('click', function (e) {
-           this.openPopup(e.latlng);
-     });
-
-     mymap.on ({
-         click: function() {
-             isClicked = false
-         },
-         popupclose: function () {
-             isClicked = false
-         }
-     })
-     
-
-    }
-    
-     if(state=='All'){
-      if (fy == "{{i.fy}}"){
-      console.log("{{i.fy}}");
-      // var marker = L.marker(["{{ i.lat }}", "{{ i.lng }}"], {icon:pvIcon1}).addTo(mymap); 
-      var marker = L.marker(["{{ i.lat }}", "{{ i.lng }}"], {icon:iconFy}).addTo(mymap).bindPopup(table4, popupOptions);
-
-      console.log(marker);
-      // sectorlayerGroup2.addLayer(marker);
-      marker.addTo(mymap);
-      markerlist.push(marker);
-      console.log(markerlist);
-      // mymap.removeLayer(marker);
-    // console.log(sectorlayerGroup2);
-    marker.on('click', function (e) {
-           this.openPopup(e.latlng);
-     });
-
-     mymap.on ({
-         click: function() {
-             isClicked = false
-         },
-         popupclose: function () {
-             isClicked = false
-         }
-     })
-     
-
-    }
-    } 
-    else{
-      if (fy == "{{i.fy}}" && state == '{{i.inputState}}' && district == ""){
-      console.log("{{i.fy}}","{{i.inputState}}");
-      // var marker = L.marker(["{{ i.lat }}", "{{ i.lng }}"], {icon:pvIcon1}).addTo(mymap); 
-      var marker = L.marker(["{{ i.lat }}", "{{ i.lng }}"], {icon:iconFy}).addTo(mymap).bindPopup(table4, popupOptions);
-
-      console.log(marker);
-      // sectorlayerGroup2.addLayer(marker);
-      marker.addTo(mymap);
-      markerlist.push(marker);
-      console.log(markerlist);
-      // mymap.removeLayer(marker);
-    // console.log(sectorlayerGroup2);
-    marker.on('click', function (e) {
-           this.openPopup(e.latlng);
-     });
-
-     mymap.on ({
-         click: function() {
-             isClicked = false
-         },
-         popupclose: function () {
-             isClicked = false
-         }
-     })
-     
-
-    }
-    }
-
-    
-    
-    
-
-    `{% endfor %}`
-  }
-
-
-  function stateProjects(){
-    console.log("markerlist in sector:",markerlist);
-    // debugger;
-    clear_marker();
-    console.log(markerlist);
-    // sectorlayerGroup2.removeLayer(marker);
-    var state = document.getElementById('indstate').value;
-    console.log(state);
-    
-
-    `{% for i in coalform %}`
-    // if `{{i.fy}}` is  fy:
-    var table4 = 
-      
-      `<table class="w3-table" id="popup" style="font-size:12px; align:center;" >
-        <tbody>
-      
-        {% if i.project_name %}
-        <tr>
-            <th><b>Project name</b></th>
-            <th><b>{{ i.project_name}}</b></th>
-        </tr>
-        {% endif %}
-        
-        {% if i.inputState %}
-        <tr>
-          <td>State</td>
-          <td>{{ i.inputState}}</td>
-        </tr>
-        {% endif %}
-        {% if i.inputDistrict %}
-        <tr>
-          <td>District</td>
-          <td>{{ i.inputDistrict }}</td>
-        </tr>
-        {% endif %}
-        {% if i.agencytype %}
-        <tr>
-          <td>Implementing Agency</td>
-          <td>{{ i.agencytype}}</td>
-        </tr>
-        {% endif %}
-        
-        {% if i.Projectstatus %}
-        <tr>
-          <td>Project Status</td>
-          <td>{{ i.Projectstatus }}</td>
-        </tr>
-        {% endif %}
-        
-        <tr>
-          {% if i.commpendium %}
-            <td><a href="{{ i.commpendium.url }}" target = "_app"><img src="../static/map/images/icons8-pdf-40.png" style="height:48;width:48" /></a></td>
-            
-             
-          {% endif %}
-          {% if i.picture %}
-            <td><a href="{{ i.picture.url }}" class = "popupimage2" target = "_app"><img src="../static/map/images/icons8-image-48.png" style="height:48;width:48" /></a></td>
-          {% else %}
-            <td><img src="../static/map/images/icons8-image-48.png" style="height:48;width:48" /></td>
-          
-          
-            {% endif %}  
-          
-            <td><a href="download/{{ i.id }}"><img src="../static/map/images/icons8-microsoft-excel-48.png" style="height:48;width:48" /></a></td>
-             
-          
-          
-          </tr>  
-      </tbody>
- </table>
- 
- </br>`
- var popupOptions =
-     {
-       'maxWidth': '500',
-       'className' : 'another-popup' // classname for another popup
-     }
-     if (state == "{{i.inputState}}"){
-      // var marker = L.marker(["{{ i.lat }}", "{{ i.lng }}"], {icon:pvIcon1}).addTo(mymap); 
-      var marker = L.marker(["{{ i.lat }}", "{{ i.lng }}"], {icon:iconState}).addTo(mymap).bindPopup(table4, popupOptions);
-
-      // console.log(marker);
-      // sectorlayerGroup3.addLayer(marker);
-      // sectorlayerGroup3.clearLayers();
-      // marker.addTo(mymap);
-      marker.addTo(mymap);
-      markerlist.push(marker);
-      console.log(markerlist);
-    // console.log(sectorlayerGroup3);
-    marker.on('click', function (e) {
-           this.openPopup(e.latlng);
-     });
-
-     mymap.on ({
-         click: function() {
-             isClicked = false
-         },
-         popupclose: function () {
-             isClicked = false
-         }
-     })
-     
-
-     }
-     else{
-      if(state=="All"){
-      // var marker = L.marker(["{{ i.lat }}", "{{ i.lng }}"], {icon:pvIcon1}).addTo(mymap); 
-      var marker = L.marker(["{{ i.lat }}", "{{ i.lng }}"], {icon:iconState}).addTo(mymap).bindPopup(table4, popupOptions);
-
-      // console.log(marker);
-      // sectorlayerGroup3.addLayer(marker);
-      // sectorlayerGroup3.clearLayers();
-      // marker.addTo(mymap);
-      marker.addTo(mymap);
-      markerlist.push(marker);
-      console.log(markerlist);
-    // console.log(sectorlayerGroup3);
-    marker.on('click', function (e) {
-           this.openPopup(e.latlng);
-     });
-
-     mymap.on ({
-         click: function() {
-             isClicked = false
-         },
-         popupclose: function () {
-             isClicked = false
-         }
-     })
-       
-      }
-     }
-
-    `{% endfor %}`
-  }
-
-
-
-  function districtProjects(){
-    console.log("markerlist in sector:",markerlist);
-    // debugger;
-    clear_marker();
-    console.log(markerlist);
-    // sectorlayerGroup2.removeLayer(marker);
-    var district = document.getElementById('district').value;
-    console.log(district);
-    
-
-    `{% for i in coalform %}`
-    // if `{{i.fy}}` is  fy:
-    var table4 = 
-      
-      `<table class="w3-table" id="popup" style="font-size:12px; align:center;" >
-        <tbody>
-      
-        {% if i.project_name %}
-        <tr>
-            <th><b>Project name</b></th>
-            <th><b>{{ i.project_name}}</b></th>
-        </tr>
-        {% endif %}
-        
-        {% if i.inputState %}
-        <tr>
-          <td>State</td>
-          <td>{{ i.inputState}}</td>
-        </tr>
-        {% endif %}
-        {% if i.inputDistrict %}
-        <tr>
-          <td>District</td>
-          <td>{{ i.inputDistrict }}</td>
-        </tr>
-        {% endif %}
-        {% if i.agencytype %}
-        <tr>
-          <td>Implementing Agency</td>
-          <td>{{ i.agencytype}}</td>
-        </tr>
-        {% endif %}
-        
-        {% if i.Projectstatus %}
-        <tr>
-          <td>Project Status</td>
-          <td>{{ i.Projectstatus }}</td>
-        </tr>
-        {% endif %}
-        
-        <tr>
-          {% if i.commpendium %}
-            <td><a href="{{ i.commpendium.url }}" target = "_app"><img src="../static/map/images/icons8-pdf-40.png" style="height:48;width:48" /></a></td>
-            
-             
-          {% endif %}
-          {% if i.picture %}
-            <td><a href="{{ i.picture.url }}" class = "popupimage2" target = "_app"><img src="../static/map/images/icons8-image-48.png" style="height:48;width:48" /></a></td>
-          {% else %}
-            <td><img src="../static/map/images/icons8-image-48.png" style="height:48;width:48"/></td>
-          
-          
-            {% endif %}  
-          
-            <td><a href="download/{{ i.id }}"><img src="../static/map/images/icons8-microsoft-excel-48.png" style="height:48;width:48" /></a></td>
-             
-          
-          
-          </tr>  
-      </tbody>
- </table>
- 
- </br>`
- var popupOptions =
-     {
-       'maxWidth': '500',
-       'className' : 'another-popup' // classname for another popup
-     }
-     if (district == "{{i.inputDistrict}}"){
-      // var marker = L.marker(["{{ i.lat }}", "{{ i.lng }}"], {icon:pvIcon1}).addTo(mymap); 
-      var marker = L.marker(["{{ i.lat }}", "{{ i.lng }}"], {icon:iconDistrict}).addTo(mymap).bindPopup(table4, popupOptions);
-
-      // console.log(marker);
-      // sectorlayerGroup3.addLayer(marker);
-      // marker.addTo(mymap);
-    // console.log(sectorlayerGroup);
-      marker.addTo(mymap);
-      markerlist.push(marker);
-      console.log(markerlist);
-    marker.on('click', function (e) {
-           this.openPopup(e.latlng);
-     });
-
-     mymap.on ({
-         click: function() {
-             isClicked = false
-         },
-         popupclose: function () {
-             isClicked = false
-         }
-     })
-     
-
-     }
-
-    `{% endfor %}`
-  }
-
-
-  function sector(){
-    console.log("markerlist in sector:",markerlist);
-    // debugger;
-    clear_marker();
-    console.log(markerlist);
-    // mymap.removeLayer(marker);
-    // console.log(sectorlayerGroup2);
-    // mymap.removeLayer(sectorlayerGroup2);
-    // sectorlayerGroup2.clearLayers();
-    // sectorlayerGroup2.removeLayer(marker);
-    var sector = document.getElementById('sector').value;
-    var state = document.getElementById('indstate').value;
-    var district = document.getElementById('district').value;
-
-    console.log(sector);
-    console.log(state);
-    console.log(district);
-    
-
-    `{% for i in coalform %}`
-    // if `{{i.fy}}` is  fy:
-    var table4 = 
-      
-      `<table class="w3-table" id="popup" style="font-size:12px; align:center;" >
-        <tbody>
-      
-        {% if i.project_name %}
-        <tr>
-            <th><b>Project name</b></th>
-            <th><b>{{ i.project_name}}</b></th>
-        </tr>
-        {% endif %}
-        
-        {% if i.inputState %}
-        <tr>
-          <td>State</td>
-          <td>{{ i.inputState}}</td>
-        </tr>
-        {% endif %}
-        {% if i.inputDistrict %}
-        <tr>
-          <td>District</td>
-          <td>{{ i.inputDistrict }}</td>
-        </tr>
-        {% endif %}
-        {% if i.agencytype %}
-        <tr>
-          <td>Implementing Agency</td>
-          <td>{{ i.agencytype}}</td>
-        </tr>
-        {% endif %}
-        
-        {% if i.Projectstatus %}
-        <tr>
-          <td>Project Status</td>
-          <td>{{ i.Projectstatus }}</td>
-        </tr>
-        {% endif %}
-        
-        <tr>
-          {% if i.commpendium %}
-            <td><a href="{{ i.commpendium.url }}" target = "_app"><img src="../static/map/images/icons8-pdf-40.png" style="height:48;width:48" /></a></td>
-            
-             
-          {% endif %}
-          {% if i.picture %}
-            <td><a href="{{ i.picture.url }}" class = "popupimage2" target = "_app"><img src="../static/map/images/icons8-image-48.png" style="height:48;width:48" /></a></td>
-          {% else %}
-            <td><img src="../static/map/images/icons8-image-48.png" style="height:48;width:48"/></td>
-          
-          
-            {% endif %}  
-          
-            <td><a href="download/{{ i.id }}"><img src="../static/map/images/icons8-microsoft-excel-48.png" style="height:48;width:48" /></a></td>
-             
-          
-          
-          </tr>  
-      </tbody>
- </table>
- 
- </br>`
- var popupOptions =
-     {
-       'maxWidth': '500',
-       'className' : 'another-popup' // classname for another popup
-     }
-     
-    
-      
-    if (state=='All'){
-      if (sector == "{{i.sector}}" ){
-      console.log("{{i.sector}}","{{i.inputState}}");
-      // var marker = L.marker(["{{ i.lat }}", "{{ i.lng }}"], {icon:pvIcon1}).addTo(mymap); 
-      var marker = L.marker(["{{ i.lat }}", "{{ i.lng }}"], {icon:iconSector}).addTo(mymap).bindPopup(table4, popupOptions);
-
-      // console.log(marker);
-      // sectorlayerGroup2.addLayer(marker);
-      // marker.addTo(mymap);
-    // console.log(sectorlayerGroup);
-      marker.addTo(mymap);
-      markerlist.push(marker);
-      console.log(markerlist);
-    marker.on('click', function (e) {
-           this.openPopup(e.latlng);
-     });
-
-     mymap.on ({
-         click: function() {
-             isClicked = false
-         },
-         popupclose: function () {
-             isClicked = false
-         }
-     })
-     
-
-    }
-    } 
-    else{
-      if(district == ""){
-      if (sector == "{{i.sector}}" && state=='{{i.inputState}}'){
-      console.log("{{i.sector}}","{{i.inputState}}");
-      // var marker = L.marker(["{{ i.lat }}", "{{ i.lng }}"], {icon:pvIcon1}).addTo(mymap); 
-      var marker = L.marker(["{{ i.lat }}", "{{ i.lng }}"], {icon:iconSector}).addTo(mymap).bindPopup(table4, popupOptions);
-
-      // console.log(marker);
-      // sectorlayerGroup2.addLayer(marker);
-      // marker.addTo(mymap);
-    // console.log(sectorlayerGroup);
-      marker.addTo(mymap);
-      markerlist.push(marker);
-      console.log(markerlist);
-    marker.on('click', function (e) {
-           this.openPopup(e.latlng);
-     });
-
-     mymap.on ({
-         click: function() {
-             isClicked = false
-         },
-         popupclose: function () {
-             isClicked = false
-         }
-     })
-     
-
-    }
-  }
-  else{
-    if(sector == "{{i.sector}}" && state == '{{i.inputState}}' && district == '{{i.inputDistrict}}'){
-      console.log("{{i.sector}}","{{i.inputState}}","{{i.inputDistrict}}");
-      // var marker = L.marker(["{{ i.lat }}", "{{ i.lng }}"], {icon:pvIcon1}).addTo(mymap); 
-      var marker = L.marker(["{{ i.lat }}", "{{ i.lng }}"], {icon:iconSector}).addTo(mymap).bindPopup(table4, popupOptions);
-
-      console.log(marker);
-      // sectorlayerGroup2.addLayer(marker);
-      marker.addTo(mymap);
-      markerlist.push(marker);
-      console.log(markerlist);
-      // mymap.removeLayer(marker);
-    // console.log(sectorlayerGroup2);
-    marker.on('click', function (e) {
-           this.openPopup(e.latlng);
-     });
-
-     mymap.on ({
-         click: function() {
-             isClicked = false
-         },
-         popupclose: function () {
-             isClicked = false
-         }
-     })
-     
-
-    }
-  }
-    }
-
-    
-
-    `{% endfor %}`
-  }
-
-
-  function clear_marker() {
-    if (markerlist!==null) {
-    for (var i = markerlist.length - 1; i >= 0; i--) {
-      markerlist[i].remove();
-    }
-}
-                                    // markerlist.forEach(layer => mymap.removeLayer(layer));
-
-                                }
-</script>
-
 
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
 
-                            <script src="https://d3js.org/d3.v4.min.js"></script>
-
-
-                            
-                      
+<script src="https://d3js.org/d3.v4.min.js"></script>
 
 <script>
   var LayerList = [];
 
-const domain = ['https://geonode.communitygis.in/','http://localhost/'];
+  const domain = ['https://geonode.communitygis.in/','http://localhost/'];
 
-var rootUrl = domain[0] + 'geoserver/geonode/ows';
+  var rootUrl = domain[0] + 'geoserver/geonode/ows';
 
-var base_url =
-      domain[0] +
+  var base_url = domain[0] +
       "geoserver/geonode/ows?service=WFS&version=1.0.0&request=GetFeature&outputformat=application/json&";
     
 
-var attribute_table = L.control({ position: "bottomright" });
+  var attribute_table = L.control({ position: "bottomright" });
 
-var defaultParameters = {
-service: 'WFS',
-version: '1.0.0',
-request: 'GetFeature',
-outputFormat: 'application/json'
-};
+  var defaultParameters = {
+  service: 'WFS',
+  version: '1.0.0',
+  request: 'GetFeature',
+  outputFormat: 'application/json'
+  };
 
-var newLayerList = [];
-var wmshealthLayerList = [];
-var distLayerList = [];
-var pinLayerList = [];
-var talLayerList = [];
-var list = [];
+  var newLayerList = [];
+  var wmshealthLayerList = [];
+  var distLayerList = [];
+  var pinLayerList = [];
+  var talLayerList = [];
+  var gcpLayerList =[];
+  var list = [];
 
 function clearAllLayers(){
     for (var i = myDistrictLayerList.length - 1; i >= 0; i--) {
@@ -1198,566 +291,449 @@ function clearAllLayers(){
 
 }
 
-
-
 $(document).ready(function() {
 
-$('#indstate').on('change', function() {
-  //  $("#pv").show();
-   // $("#hospital").show();
-});
+  $('#indstate').on('change', function() {
+    //  $("#pv").show();
+    // $("#hospital").show();
+  });
 
-//  $('#district').on('change',function(){
-//      $("#pv").show();
-//  });
-//console.log("hi",indstate);
-
-$('#district').on('change', function() {
-                                       //$("#block").show();
-                                       // var state=document.getElementById("indstate");
-                                       // console.log(state);
-                                       if (this.value == 'Mumbai City') {
-                                           $("#mumwards").show();
-                                           $("#mumsubwards").hide();
-                                          //  removewards();
-
-                                           $("#block").hide();
-                                       } else if (this.value == 'Mumbai Suburban') {
-                                           $("#mumwards").hide();
-                                          //  removewards();
-                                           $("#mumsubwards").show();
-
-                                           $("#block").hide();
-                                       } else if (indstate == "Chhattisgarh") {
-
-                                           $("#block").hide();
-                                           // $("#pv").show();
-
-                                       } else {
-                                           $("#mumwards").hide();
-                                           $("#mumsubwards").hide();
-                                          //  $("#pv").show();
-                                           $("#block").show();
-                                           
-
-                                       }
-                                   });
-
-
-$('#view_s').on('change', function() { 
-    if (this.value == 'Navigated Area View') {
-       wmshealthLayerList.forEach(l => {
-           mymap.removeLayer(l);
-       })
-
-
-       // $("#indiaview").hide();
-       
-       $("#navigatedarea").show();
-       // $("#pv").show();
-       
-       clear_layer();
-       // clearpoint_layer();
-       // removeWFSfac();
-       // removeKoboHealthFacity();
-       // removeKoboHealthFacitywms(facility);
-       clear_distlayer();
-       // clear_pinlayer();
-   }
+  $('#district').on('change', function() {
+    
+   console.log("district changed")
+   putWMSLayerdist();
 
 });
+$('#sector').on('change', function() {
+    
+    console.log("sector changed")
+    putWMSLayerGCP();
+ 
+ });
 });
 
 let listState = {
-                                    'Uttarakhand': ['Uttarakhand', 30.0668, 79.0193],
-                                    'Ladakh': ['Ladakh', 34.152588, 77.577049],
-                                    'Daman & Diu': ['Daman & Diu', 20.4283, 72.8397],
-                                    'Telangana': ['Telangana', 18.1124, 79.0193],
-                                    'Odisha': ['Odisha', 20.9517, 85.0985],
-                                    'Gujarat': ['Gujarat', 22.2587, 71.1924],
-                                    'Andaman & Nicobar Island': ['Andaman & Nicobar Island', 11.7401, 92.6586],
-                                    'Maharashtra': ['Maharashtra', 19.7515, 75.7139],
-                                    'Andhra Pradesh': ['Andhra Pradesh', 15.91, 79.7439],
-                                    'Arunachal Pradesh': ['Arunachal Pradesh', 27.10039878, 93.61660071],
-                                    'Assam': ['Assam', 26.7499809, 94.21666744],
-                                    'Bihar': ['Bihar', 25.78541445, 87.4799727],
-                                    'Chandigarh': ['Chandigarh', 30.71999697, 76.78000565],
-                                    'Chhattisgarh': ['Chhattisgarh', 22.09042035, 82.15998734],
-                                    'Dadra & Nagar Havelli': ['Dadra & Nagar Havelli', 20.26657819, 73.0166178],
-                                    'Delhi': ['Delhi', 28.6699929, 77.23000403],
-                                    'Goa': ['Goa', 15.491997, 73.81800065],
-                                    'Haryana': ['Haryana', 28.45000633, 77.01999101],
-                                    'Himachal Pradesh': ['Himachal Pradesh', 31.10002545, 77.16659704],
-                                    'Jammu & Kashmir': ['Jammu & Kashmir', 34.29995933, 74.46665849],
-                                    'Jharkhand': ['Jharkhand', 23.80039349, 86.41998572],
-                                    'Karnataka': ['Karnataka', 12.57038129, 76.91999711],
-                                    'Kerala': ['Kerala', 8.900372741, 76.56999263],
-                                    'Lakshadweep': ['Lakshadweep', 10.56257331, 72.63686717],
-                                    'Madhya Pradesh': ['Madhya Pradesh', 21.30039105, 76.13001949],
-                                    'Manipur': ['Manipur', 24.6637, 93.9063],
-                                    'Meghalaya': ['Meghalaya', 25.57049217, 91.8800142],
-                                    'Mizoram': ['Mizoram', 23.71039899, 92.72001461],
-                                    'Nagaland': ['Nagaland', 25.6669979, 94.11657019],
-                                    'Orissa': ['Orissa', 19.82042971, 85.90001746],
-                                    'Puducherry': ['Puducherry', 11.93499371, 79.83000037],
-                                    'Punjab': ['Punjab', 31.51997398, 75.98000281],
-                                    'Rajasthan': ['Rajasthan', 26.44999921, 74.63998124],
-                                    'Sikkim': ['Sikkim', 27.3333303, 88.6166475],
-                                    'Tamil Nadu': ['Tamil Nadu', 12.92038576, 79.15004187],
-                                    'Tripura': ['Tripura', 23.83540428, 91.27999914],
-                                    'Uttar Pradesh': ['Uttar Pradesh', 27.59998069, 78.05000565],
-                                    ',Uttaranchal': ['Uttaranchal', 30.32040895, 78.05000565],
-                                    'West Bengal': ['West Bengal', 22.58039044, 88.32994665]
-                                }
+      'Uttarakhand': ['Uttarakhand', 30.0668, 79.0193],
+      'Ladakh': ['Ladakh', 34.152588, 77.577049],
+      'Daman & Diu': ['Daman & Diu', 20.4283, 72.8397],
+      'Telangana': ['Telangana', 18.1124, 79.0193],
+      'Odisha': ['Odisha', 20.9517, 85.0985],
+      'Gujarat': ['Gujarat', 22.2587, 71.1924],
+      'Andaman & Nicobar Island': ['Andaman & Nicobar Island', 11.7401, 92.6586],
+      'Maharashtra': ['Maharashtra', 19.7515, 75.7139],
+      'Andhra Pradesh': ['Andhra Pradesh', 15.91, 79.7439],
+      'Arunachal Pradesh': ['Arunachal Pradesh', 27.10039878, 93.61660071],
+      'Assam': ['Assam', 26.7499809, 94.21666744],
+      'Bihar': ['Bihar', 25.78541445, 87.4799727],
+      'Chandigarh': ['Chandigarh', 30.71999697, 76.78000565],
+      'Chhattisgarh': ['Chhattisgarh', 22.09042035, 82.15998734],
+      'Dadra & Nagar Havelli': ['Dadra & Nagar Havelli', 20.26657819, 73.0166178],
+      'Delhi': ['Delhi', 28.6699929, 77.23000403],
+      'Goa': ['Goa', 15.491997, 73.81800065],
+      'Haryana': ['Haryana', 28.45000633, 77.01999101],
+      'Himachal Pradesh': ['Himachal Pradesh', 31.10002545, 77.16659704],
+      'Jammu & Kashmir': ['Jammu & Kashmir', 34.29995933, 74.46665849],
+      'Jharkhand': ['Jharkhand', 23.80039349, 86.41998572],
+      'Karnataka': ['Karnataka', 12.57038129, 76.91999711],
+      'Kerala': ['Kerala', 8.900372741, 76.56999263],
+      'Lakshadweep': ['Lakshadweep', 10.56257331, 72.63686717],
+      'Madhya Pradesh': ['Madhya Pradesh', 21.30039105, 76.13001949],
+      'Manipur': ['Manipur', 24.6637, 93.9063],
+      'Meghalaya': ['Meghalaya', 25.57049217, 91.8800142],
+      'Mizoram': ['Mizoram', 23.71039899, 92.72001461],
+      'Nagaland': ['Nagaland', 25.6669979, 94.11657019],
+      'Orissa': ['Orissa', 19.82042971, 85.90001746],
+      'Puducherry': ['Puducherry', 11.93499371, 79.83000037],
+      'Punjab': ['Punjab', 31.51997398, 75.98000281],
+      'Rajasthan': ['Rajasthan', 26.44999921, 74.63998124],
+      'Sikkim': ['Sikkim', 27.3333303, 88.6166475],
+      'Tamil Nadu': ['Tamil Nadu', 12.92038576, 79.15004187],
+      'Tripura': ['Tripura', 23.83540428, 91.27999914],
+      'Uttar Pradesh': ['Uttar Pradesh', 27.59998069, 78.05000565],
+      ',Uttaranchal': ['Uttaranchal', 30.32040895, 78.05000565],
+      'West Bengal': ['West Bengal', 22.58039044, 88.32994665]
+  }
 
-                                let listDistrict = {
-                                    'Akola': ['Akola', 20.7002, 77.0082],
-                                    'Amravati': ['Amravati', 20.9374, 77.7796],
-                                    'buldhana': ['buldhana', 20.4561, 76.3637],
-                                    'Yavatmal': ['Yavatmal', 20.3888, 78.1204],
-                                    'Washim': ['Washim', 20.139, 77.1025],
-                                    'Aurangabad': ['Aurangabad', 19.8762, 75.3433],
-                                    'Beed': ['Beed', 18.9891, 75.7601],
-                                    'Jalna': ['Jalna', 19.8297, 75.88],
-                                    'Osmanabad': ['Osmanabad', 18.207, 76.1784],
-                                    'Nanded': ['Nanded', 19.1383, 77.321],
-                                    'Latur': ['Latur', 18.4088, 76.5604],
-                                    'Parbhani': ['Parbhani', 19.2644, 76.6413],
-                                    'Hingoli': ['Hingoli', 19.5781, 77.1025],
-                                    'Thane': ['Thane', 19.2183, 72.9781],
-                                    'Palghar': ['Palghar', 19.6936, 72.7655],
-                                    'Raigad': ['Raigad', 18.5158, 73.1822],
-                                    'Ratnagiri': ['Ratnagiri', 16.9902, 73.312],
-                                    'Sindhudurg': ['Sindhudurg', 16.3492, 73.5594],
-                                    'Bhandara': ['Bhandara', 21.0736, 79.8297],
-                                    'Mumbai City': ['Mumbai City', 18.942, 72.816],
-                                    'Mumbai Suburban': ['Mumbai Suburban', 19.118, 72.905],
-                                    'Gadchiroli': ['Gadchiroli', 19.4969, 80.2767],
-                                    'Chandrapur': ['Chandrapur', 19.9615, 79.2961],
-                                    'Gondia': ['Gondia', 21.4624, 80.221],
-                                    'Nagpur': ['Nagpur', 21.1458, 79.0882],
-                                    'Wardha': ['Wardha', 20.7453, 78.6022],
-                                    'Ahmadnagar': ['Ahmadnagar', 19.0948, 74.748],
-                                    'Dhule': ['Dhule', 20.9042, 74.7749],
-                                    'Jalgaon': ['Jalgaon', 21.0077, 75.5626],
-                                    'Nandurbar': ['Nandurbar', 21.7469, 74.124],
-                                    'Nashik': ['Nashik', 19.9975, 73.7898],
-                                    'Kolhapur': ['Kolhapur', 16.705, 74.2433],
-                                    'Pune': ['Pune', 18.5204, 73.8567],
-                                    'Sangli': ['Sangli', 16.8524, 74.5815],
-                                    'Satara': ['Satara', 17.6805, 74.0183],
-                                    'Solapur': ['Solapur', 17.6599, 74.9064]
-                                }
-                                let area = null;
-                                $('#indstate').on('change', function() {
+  
+  $('#indstate').on('change', function() {
 
-if (area) {
-    mymap.removeLayer(area);
-}
-clear_layer();
-// clearpoint_layer();
-// clear_pinlayer();
-let indstate = document.getElementById('indstate').value;
+    clear_layer();
+    let indstate = document.getElementById('indstate').value;
+    putWMSLayerst();
 
-putWMSLayerst();
-
-
-//mymap.spin(true,{lines: 15, length: 1, width: 50, scale: 200,radius: 200, color: "grey"});
-})
-
-$('#district').on('change', function() {
-if (area) {
-    mymap.removeLayer(area);
-}
-//clear_layer();
-
-// clearpoint_layer();
-// clear_pinlayer();
-let district = document.getElementById('district').value;
-
-putWMSLayerdist();
-
-
-//mymap.spin(true,{lines: 15, length: 1, width: 50, scale: 200,radius: 200, color: "grey"});
-})
-
+    // mymap.spin(true,{lines: 15, length: 1, width: 50, scale: 200,radius: 200, color: "grey"});
+  })
 
 function filterCSV(csv, key, value) 
-                                {
-                                    var result = [];
-                                    var unique = [];
+{
+      var result = [];
+      var unique = [];
 
-                                    csv.forEach(function(val, idx, arr) {
+      csv.forEach(function(val, idx, arr) {
 
-                                        if (val[key] == value) {
-                                            //console.log(val.pincode);
-                                            if (!unique[val.Districtname]) {
-                                                result.push(val.Districtname)
-                                                unique[val.Districtname] = 1;
-                                            }
-                                        }
-                                    })
-                                    return result;
-                                }
-
-
-                                function filterCSV2(csv, key, value) {
-                                    var result = [];
-                                    var unique = [];
-
-                                    csv.forEach(function(val, idx, arr) {
-
-                                        if (val[key] == value) {
-                                            if (!unique[val.pincode]) {
-                                                result.push(val.pincode)
-                                                unique[val.pincode] = 1;
-                                            }
-                                        }
-                                    })
-                                    return result;
-                                }
-
-                                function filterCSV4(csv, key1, value1, key2, value2) {
-
-                                    var result = [];
-                                    var unique = [];
-                                    csv.forEach(function(val, idx, arr) {
-
-                                            if (val[key1] == value1 && val[key2] == value2) {
+          if (val[key] == value) {
+              //console.log(val.pincode);
+              if (!unique[val.Districtname]) {
+                  result.push(val.Districtname)
+                  unique[val.Districtname] = 1;
+              }
+          }
+      })
+      return result;
+  }
 
 
-                                                result.push(val.pincode);
-                                                unique[val.pincode] = 1;
-                                                // result.push(val.block);
-                                                // unique[val.block] = 1;
+  function filterCSV2(csv, key, value) {
+      var result = [];
+      var unique = [];
 
-                                            }
-                                        })
-                                        //console.log(result);
-                                    return result;
-                                }
+      csv.forEach(function(val, idx, arr) {
 
-                                function filterCSV3(csv, key, value) {
-                                    var result = [];
-                                    var unique = [];
+          if (val[key] == value) {
+              if (!unique[val.pincode]) {
+                  result.push(val.pincode)
+                  unique[val.pincode] = 1;
+              }
+          }
+      })
+      return result;
+  }
 
-                                    csv.forEach(function(val, idx, arr) {
+  function filterCSV4(csv, key1, value1, key2, value2) {
 
-                                        if (val[key] == value) {
+      var result = [];
+      var unique = [];
+      csv.forEach(function(val, idx, arr) {
 
-                                            if (!unique[val.block]) {
-                                                //console.log(val.block);
-
-                                                result.push(val.block)
-                                                unique[val.block] = 1;
-                                            }
-                                        }
-                                    })
-                                    return result;
-                                }
+              if (val[key1] == value1 && val[key2] == value2) {
 
 
-                                //to get data for district in a particular state(to avoid same district name in other states)
-                                // function filterCSV3(csv, key1, value1,key2,value2) {
-                                //     var result = [];
-                                //     var unique = [];
+                  result.push(val.pincode);
+                  unique[val.pincode] = 1;
+                  // result.push(val.block);
+                  // unique[val.block] = 1;
 
-                                //     csv.forEach(function(val, idx, arr) {
+              }
+          })
+          //console.log(result);
+      return result;
+  }
 
-                                //         if (val[key1] == value1 && val[key2] == value2) {
+  function filterCSV3(csv, key, value) {
+      var result = [];
+      var unique = [];
 
-                                //             if (!unique[val.block]) {
-                                //                 //console.log(val.block);
+      csv.forEach(function(val, idx, arr) {
 
-                                //                 result.push(val.block)
-                                //                 unique[val.block] = 1;
-                                //             }
-                                //         }
-                                //     })
-                                //     return result;
-                                // }
+          if (val[key] == value) {
 
-                                d3.csv("{% static 'static1/data/healthdash/st_dist_pin.csv' %}", function(data) {
-                                    $('#indstate').on("change", function(d) {
-                                        var val = d3.select(this).property("value");
-                                        console.log(val);
-                                        $('#district').find('option').not(':first').remove();
-                                        var data_1 = filterCSV(data, 'statename', val);
-                                        console.log(data_1);
-                                        var select = document.getElementById("district");
-                                        for (var i = 0; i < data_1.length; i++) {
-                                            var opt = data_1[i];
-                                            var el = document.createElement("option");
-                                            el.textContent = opt;
-                                            el.value = opt;
-                                            select.appendChild(el);
-                                            // console.log(el)
-                                            
-                                        }
-                                        $('#districtd3').val("");
-                                        // $('#block_s').val("");
-                                        // $('#pincode').val("");
-                                        
-                                    });
+              if (!unique[val.block]) {
+                  //console.log(val.block);
 
-                                    // $('#district').on("change", function(d) {
-                                    //     var val1 = document.getElementById("indstate").value;
-                                    //     console.log(val1);
-                                    //     var val2 = d3.select(this).property("value");
-                                    //     $('#pincode').find('option').not(':first').remove();
-
-                                    //     // var data_2 = filterCSV4(data, 'statename', val1, 'Districtname', val2);
-                                    //     // console.log(data_2);
-                                    //     // var select = document.getElementById("pincode");
-                                    //     // for (var i = 0; i < data_2.length; i++) {
-                                    //     //     var opt = data_2[i];
-                                    //     //     var el = document.createElement("option");
-                                    //     //     el.textContent = opt;
-                                    //     //     el.value = opt;
-                                    //     //     select.appendChild(el);
-                                    //     //     // console.log(el)
-                                    //     // }
-                                    //     // $('#pincoded3').val("");
+                  result.push(val.block)
+                  unique[val.block] = 1;
+              }
+          }
+      })
+      return result;
+  }
 
 
-                                    //     $('#block_s').find('option').not(':first').remove();
-                                    //     var data_3 = filterCSV3(data, 'Districtname', val2);
-                                    //     // var data_3 = filterCSV3(data, 'Districtname', val2, 'statename',val1);
-                                    //     // var data_3 = filterCSV4(data, 'statename', val1, 'Districtname', val2);
-                                    //     console.log(data_3);
-                                    //     // var select = document.getElementById("block_s");
-                                    //     var select = document.getElementById("district")
-                                    //     console.log("select:",select);
-                                    //     for (var i = 0; i < data_3.length; i++) {
-                                    //         var opt = data_3[i];
-                                    //         var el = document.createElement("option");
-                                    //         el.textContent = opt;
-                                    //         el.value = opt;
-                                    //         select.appendChild(el);
-                                    //         console.log(el)
-                                    //     }
-                                    //     $('#block_sd3').val("");
+  d3.csv("{% static 'static1/data/healthdash/st_dist_pin.csv' %}", function(data) {
+      $('#indstate').on("change", function(d) {
+          var val = d3.select(this).property("value");
+          console.log(val);
+          $('#district').find('option').not(':first').remove();
+          var data_1 = filterCSV(data, 'statename', val);
+          console.log(data_1);
+          var select = document.getElementById("district");
+          for (var i = 0; i < data_1.length; i++) {
+              var opt = data_1[i];
+              var el = document.createElement("option");
+              el.textContent = opt;
+              el.value = opt;
+              select.appendChild(el);
+              // console.log(el)
+              
+          }
+          $('#districtd3').val("");
+          // $('#block_s').val("");
+          // $('#pincode').val("");
+          
+      });
 
-
-                                    // });
-
-                                    
-
-
-                                });
-
-
-
+     
+  });
 
 function putWMSLayer() {
-                                    var aspiD = document.getElementById('district').value;
-                                    var distLayerLatLong = listDistrict[aspiD];
-                                    //clear_layer();
-                                    //console.log('kk',distLayerLatLong);
-                                    var wms_layer = L.tileLayer.wms('https://geonode.communitygis.in/geoserver/wms', {
-                                        layers: 'geonode:maha_taluka_13March2021',
-                                        format: 'image/png',
-                                        transparent: 'true',
-                                        tiled: true,
+      var aspiD = document.getElementById('district').value;
+      var distLayerLatLong = listDistrict[aspiD];
+      //clear_layer();
+      //console.log('kk',distLayerLatLong);
+      var wms_layer = L.tileLayer.wms('https://geonode.communitygis.in/geoserver/wms', {
+          layers: 'geonode:maha_taluka_13March2021',
+          format: 'image/png',
+          transparent: 'true',
+          tiled: true,
 
-                                        //opacity:0.5,
-                                        // version: '1.3.0',
-                                        cql_filter: "distname='" + distLayerLatLong[0] + "'",
-                                        style: ""
-                                    });
-                                    clear_layer();
-                                    clearpoint_layer();
-                                    wms_layer.addTo(mymap);
-                                    mymap.setView([distLayerLatLong[1], distLayerLatLong[2]], 9);
+          //opacity:0.5,
+          // version: '1.3.0',
+          cql_filter: "distname='" + distLayerLatLong[0] + "'",
+          style: ""
+      });
+      clear_layer();
+      clearpoint_layer();
+      wms_layer.addTo(mymap);
+      mymap.setView([distLayerLatLong[1], distLayerLatLong[2]], 9);
 
-                                    //console.log(wms_layer);
-                                    LayerList.push(wms_layer);
-                                    // addWMSLegend(layer);
-
-
-                                }
-
-                                    function putWMSLayerst() {
-                                    clear_distlayer();
-                                    // clear_tallayer();
-                                    // clear_pinlayer();    
-                                    indstate = document.getElementById('indstate').value;
-                                    //console.log(indstate);
-                                    var stLayerLatLong = listState[indstate];
-
-                                    var wms_layer = L.tileLayer.wms('https://geonode.communitygis.in/geoserver/wms', {
-                                        layers: 'geonode:states_in_india',
-                                        format: 'image/png',
-                                        transparent: 'true',
-                                        // version: '1.3.0',
-                                        cql_filter: "state='" + stLayerLatLong[0] + "'",
-                                        style: ""
-                                    });
-                                    clear_layer();
-                                    
-                                    clear_distlayer();
-                                    // clearpoint_layer();
-                                    wms_layer.addTo(mymap);
-                                    mymap.setView([stLayerLatLong[1], stLayerLatLong[2] - 2], 5);
-                                    LayerList.push(wms_layer);
-                                    // addWMSLegend(layer);
-                                    console.log(LayerList);
-                                    
-
-                                }
+      //console.log(wms_layer);
+      LayerList.push(wms_layer);
+      // addWMSLegend(layer);
 
 
-                                function putWMSLayerdist() {
-                                    // clear_layer();
-                                    clear_distlayer();
-                                    // clear_tallayer();
-                                    // clear_pinlayer();
-                                    var dist = document.getElementById('district').value;
-                                    var state = document.getElementById('indstate').value;
-                                    // var layers = 'geonode:india_pincodes_12june';
-                                    var layers = 'geonode:all_india_districts_11june2020';
-                                    //console.log(indstate);
-                                    // var distLayerLatLong= listDistrict[dist];
-                                    if (dist == 'Mumbai City' || dist == 'Mumbai Suburban'){
-                                        // mymap.setView([19.0760, 72.8777], 7);
-                                        layers = 'geonode:all_india_districts_11june2020';
-                                      }    
-                                    if (state == "Chhattisgarh") {
-                                        layers = 'geonode:all_india_districts_11june2020';
-                                    }
-                                    var wms_layer = L.tileLayer.wms('https://geonode.communitygis.in/geoserver/wms', {
-                                        layers: layers,
-                                        format: 'image/png',
-                                        transparent: 'true',
-                                        // version: '1.3.0',
-                                        cql_filter: `district='${dist}' AND state='${state}'`,
-                                        // cql_filter: `district='${dist}',
-                                        // cql_filter: "district='" + distLayerLatLong[0] + "'",
-                                        style: ""
-                                    });
-                                    // clear_layer(); 
-                                    // clear_distlayer();   
-                                    // clear_tallayer();
-                                    
-                                    
-                                    // clear_pinlayer();
-                                    
-                                    //console.log(wms_layer);
-                                    //clear_layer();
-                                    //clearpoint_layer();
-                                    wms_layer.addTo(mymap);
-                                    // mymap.setView([distLayerLatLong[1],distLayerLatLong[2]],8);
-                                    // mymap.setView(layers,dist);
-                                    // setView1('geonode:india_pincodes_12june',dist);
-                                    setView1('geonode:all_india_districts_11june2020',dist,state);
-                                    distLayerList.push(wms_layer);
-                                    // addWMSLegend(layer);
-                                    console.log(distLayerList);
-                                    console.log(dist,state);
+  }
 
-                                }
-                                function setView1(layerName, dist,state) {
-                                    // alert(layerName);
-                                    console.log(state);
-                                    if (area) {
-                                        mymap.removeLayer(area);
-                                    }
-                                    // let rootUrl = '{{site_url}}geoserver/geonode/ows';
-                                    if (state == "Delhi"){
-                                      let rootUrl = 'https://geonode.communitygis.in/geoserver/geonode/ows';
-                                    let options = {
-                                        service: 'WFS',
-                                        version: '1.0.0',
-                                        request: 'GetFeature',
-                                        outputFormat: 'application/json',
-                                        typeName: layerName,
-                                        cql_filter: `district='${dist}' AND state='NCT of Delhi'`,
-                                        
-                                        // propertyName: 'the_geom,distname,taluka_nam,atc',
-                                    };
-                                    let parameters = L.Util.extend(options);
-                                    layer_url = rootUrl + L.Util.getParamString(parameters)
-                                
-                                    // console.log(layer_url);
-                                    fetch(layer_url).then(
-                                        function(response) {
-                                            if (response.status !== 200) {
-                                                console.log('Looks like there was a problem. Status Code: ' +
-                                                    response.status);
-                                                return;
-                                            }
-                                            response.json().then(function(geojsonData) {
-                                                area = L.geoJson(geojsonData.features).addTo(mymap)
-                                                lat = area.getBounds()._northEast.lat
-                                                lng = area.getBounds()._northEast.lng
-                                                mymap.setView([lat, lng - 0.4]);
-                                                geojson = L.geoJson(geojsonData.features, {
-                                                // style : style1,
-                                                onEachFeature: onEachFeature
-                                                }).addTo(mymap);
-                                                // LayerList.push(geojson);
-                                                distLayerList.push(geojson);
-                                                
-                                                mymap.spin(false);
-                                            });
-                                        }).catch(function(err) {
-                                        console.log('Fetch Error :-S', err);
-                                        
-                                    });
-                                    }else{
-                                      let rootUrl = 'https://geonode.communitygis.in/geoserver/geonode/ows';
-                                    let options = {
-                                        service: 'WFS',
-                                        version: '1.0.0',
-                                        request: 'GetFeature',
-                                        outputFormat: 'application/json',
-                                        typeName: layerName,
-                                        cql_filter: `district='${dist}' AND state='${state}'`,
-                                        // propertyName: 'the_geom,distname,taluka_nam,atc',
-                                    };
-                                    let parameters = L.Util.extend(options);
-                                    layer_url = rootUrl + L.Util.getParamString(parameters)
-                                
-                                    // console.log(layer_url);
-                                    fetch(layer_url).then(
-                                        function(response) {
-                                            if (response.status !== 200) {
-                                                console.log('Looks like there was a problem. Status Code: ' +
-                                                    response.status);
-                                                return;
-                                            }
-                                            response.json().then(function(geojsonData) {
-                                                area = L.geoJson(geojsonData.features).addTo(mymap)
-                                                lat = area.getBounds()._northEast.lat
-                                                lng = area.getBounds()._northEast.lng
-                                                mymap.setView([lat, lng - 0.4]);
-                                                geojson = L.geoJson(geojsonData.features, {
-                                                // style : style1,
-                                                onEachFeature: onEachFeature
-                                                }).addTo(mymap);
-                                                // LayerList.push(geojson);
-                                                distLayerList.push(geojson);
-                                                
-                                                mymap.spin(false);
-                                            });
-                                        }).catch(function(err) {
-                                        console.log('Fetch Error :-S', err);
-                                        
-                                    });
+    function putWMSLayerst() {
+        clear_layer(); // Clear existing layers
+      clear_distlayer();
+      // clear_tallayer();
+      // clear_pinlayer();    
+      indstate = document.getElementById('indstate').value;
+      //console.log(indstate);
+      var stLayerLatLong = listState[indstate];
+
+      var wms_layer = L.tileLayer.wms('https://geonode.communitygis.in/geoserver/wms', {
+          layers: 'geonode:states_in_india',
+          format: 'image/png',
+          transparent: 'true',
+          // version: '1.3.0',
+          cql_filter: "state='" + stLayerLatLong[0] + "'",
+          styles: 'India_Divisions_Merged_V1',
+      });
+      clear_layer();
+      
+      clear_distlayer();
+      // clearpoint_layer();
+      wms_layer.addTo(mymap);
+      mymap.setView([stLayerLatLong[1], stLayerLatLong[2] - 2], 7);
+      LayerList.push(wms_layer);
+      // addWMSLegend(layer);
+      console.log(LayerList);
+      
+
+  }
 
 
-                                    }
-                                    
-                                    // console.log(layer_url);
-                                    
-                                }
+  function putWMSLayerdist() {
+      // clear_layer();
+      clear_distlayer();
+      // clear_tallayer();
+      // clear_pinlayer();
+      var dist = document.getElementById('district').value;
+      var state = document.getElementById('indstate').value;
+      // var layers = 'geonode:india_pincodes_12june';
+      var layers = 'geonode:all_india_districts_11june2020';
+      //console.log(indstate);
+      // var distLayerLatLong= listDistrict[dist];
+      if (dist == 'Mumbai City' || dist == 'Mumbai Suburban'){
+          // mymap.setView([19.0760, 72.8777], 7);
+          layers = 'geonode:all_india_districts_11june2020';
+        }    
+      if (state == "Chhattisgarh") {
+          layers = 'geonode:all_india_districts_11june2020';
+      }
+      var wms_layer = L.tileLayer.wms('https://geonode.communitygis.in/geoserver/wms', {
+          layers: layers,
+          format: 'image/png',
+          transparent: 'true',
+          // version: '1.3.0',
+          cql_filter: `district='${dist}' AND state='${state}'`,
+          // cql_filter: `district='${dist}',
+          // cql_filter: "district='" + distLayerLatLong[0] + "'",
+          style: ""
+      });
+      // clear_layer(); 
+      // clear_distlayer();   
+      // clear_tallayer();
+      
+      
+      // clear_pinlayer();
+      
+      //console.log(wms_layer);
+      //clear_layer();
+      //clearpoint_layer();
+      wms_layer.addTo(mymap);
+      // mymap.setView([distLayerLatLong[1],distLayerLatLong[2]],8);
+      // mymap.setView(layers,dist);
+      // setView1('geonode:india_pincodes_12june',dist);
+      setView1('geonode:all_india_districts_11june2020',dist,state);
+      distLayerList.push(wms_layer);
+      // addWMSLegend(layer);
+      console.log(distLayerList);
+      console.log(dist,state);
 
-                                function onEachFeature(feature, layer) {
-    // layer.on({
-    //     mouseover: highlightFeature,
-    //     mouseout: resetHighlight,
-    //     click: zoomToFeature
-    // });
+  }
+  function putWMSLayerGCP() {
+      // clear_layer();
+      clear_GCPlayer();
+      // clear_tallayer();
+      // clear_pinlayer();
+      var dist = document.getElementById('district').value;
+      var state = document.getElementById('indstate').value;
+      var category = document.getElementById('sector').value;
+      // var layers = 'geonode:india_pincodes_12june';
+      console.log("GCP for ",category);
+      var layers = 'geonode:gcp_merged_districtwise_24sept24';
+      
+      var wms_layer = L.tileLayer.wms('http://dilrmp-jk.communitygis.in/geoserver/wms', {
+          layers: layers,
+          format: 'image/png',
+          transparent: 'true',
+          cql_filter: `district='${dist}' AND category ='${category}'`,
+          request: 'GetMap'  // specify the request type
+          
+          
+      });
+      console.log("Adding WMS Layer:", wms_layer);
+      wms_layer.addTo(mymap);
+      
+      gcpLayerList.push(wms_layer);
+
+      fetch(`http://dilrmp-jk.communitygis.in/geoserver/wfs?service=WFS&version=1.0.0&request=GetFeature&typeName=geonode:gcp_merged_districtwise_24sept24&outputFormat=application/json&CQL_FILTER=district='${dist}'`)
+    .then(response => response.json())
+    .then(data => {
+        if (data.features && data.features.length > 0) {
+            // Check if 'bbox' exists in the response, otherwise compute bounds manually
+            if (data.features[0].bbox) {
+                var bounds = data.features[0].bbox;  // Extracting the BBOX
+                var southWest = L.latLng(bounds[1], bounds[0]);
+                var northEast = L.latLng(bounds[3], bounds[2]);
+                var districtBounds = L.latLngBounds(southWest, northEast);
+
+                // Fit the map view to the district bounds
+                mymap.fitBounds(districtBounds);
+            } else {
+                // Compute bounds manually from geometry
+                var coordinates = data.features[0].geometry.coordinates;
+                var bounds = getGeometryBounds(coordinates);
+
+                // Fit the map view to the calculated bounds
+                mymap.fitBounds(bounds);
+            }
+        } else {
+            console.error('No features found for the selected district.');
+        }
+    })
+    .catch(error => console.error('Error fetching district bounds:', error));
+}
+function getGeometryBounds(coordinates) {
+    var latlngs = [];
+
+    // If it's a MultiPolygon, coordinates will be nested further
+    coordinates.forEach(function(polygon) {
+        polygon[0].forEach(function(coord) {
+            latlngs.push([coord[1], coord[0]]);  // LatLng expects [lat, lng]
+        });
+    });
+
+    // Create bounds from the LatLngs
+    return L.latLngBounds(latlngs);
+}
+  function setView1(layerName, dist,state) {
+      // alert(layerName);
+      console.log(state);
+     
+      // let rootUrl = '{{site_url}}geoserver/geonode/ows';
+      if (state == "Delhi"){
+        let rootUrl = 'https://geonode.communitygis.in/geoserver/geonode/ows';
+      let options = {
+          service: 'WFS',
+          version: '1.0.0',
+          request: 'GetFeature',
+          outputFormat: 'application/json',
+          typeName: layerName,
+          cql_filter: `district='${dist}' AND state='NCT of Delhi'`,
+          
+          // propertyName: 'the_geom,distname,taluka_nam,atc',
+      };
+      let parameters = L.Util.extend(options);
+      layer_url = rootUrl + L.Util.getParamString(parameters)
+  
+      // console.log(layer_url);
+      fetch(layer_url).then(
+          function(response) {
+              if (response.status !== 200) {
+                  console.log('Looks like there was a problem. Status Code: ' +
+                      response.status);
+                  return;
+              }
+              response.json().then(function(geojsonData) {
+                  area = L.geoJson(geojsonData.features).addTo(mymap)
+                  lat = area.getBounds()._northEast.lat
+                  lng = area.getBounds()._northEast.lng
+                  mymap.setView([lat, lng - 0.4]);
+                  geojson = L.geoJson(geojsonData.features, {
+                  // style : style1,
+                  onEachFeature: onEachFeature
+                  }).addTo(mymap);
+                  // LayerList.push(geojson);
+                  distLayerList.push(geojson);
+                  
+                  mymap.spin(false);
+              });
+          }).catch(function(err) {
+          console.log('Fetch Error :-S', err);
+          
+      });
+      }else{
+        let rootUrl = 'https://geonode.communitygis.in/geoserver/geonode/ows';
+      let options = {
+          service: 'WFS',
+          version: '1.0.0',
+          request: 'GetFeature',
+          outputFormat: 'application/json',
+          typeName: layerName,
+          cql_filter: `District='${dist}'`,
+          // propertyName: 'the_geom,distname,taluka_nam,atc',
+      };
+      let parameters = L.Util.extend(options);
+      layer_url = rootUrl + L.Util.getParamString(parameters)
+  
+      // console.log(layer_url);
+      fetch(layer_url).then(
+          function(response) {
+              if (response.status !== 200) {
+                  console.log('Looks like there was a problem. Status Code: ' +
+                      response.status);
+                  return;
+              }
+              response.json().then(function(geojsonData) {
+                  area = L.geoJson(geojsonData.features).addTo(mymap)
+                  lat = area.getBounds()._northEast.lat
+                  lng = area.getBounds()._northEast.lng
+                  mymap.setView([lat, lng - 0.4]);
+                  geojson = L.geoJson(geojsonData.features, {
+                  // style : style1,
+                  onEachFeature: onEachFeature
+                  }).addTo(mymap);
+                  // LayerList.push(geojson);
+                  distLayerList.push(geojson);
+                  
+                  mymap.spin(false);
+              });
+          }).catch(function(err) {
+          console.log('Fetch Error :-S', err);
+          
+      });
+
+
+      }
+      
+      // console.log(layer_url);
+      
+  }
+
+  function onEachFeature(feature, layer) {
     layer.setStyle({
         weight: 3,
         color: '#000000',
@@ -1769,44 +745,41 @@ function putWMSLayer() {
     
 }
 
-                                function putWMS(layer) {
-                                    var wms_layer = L.tileLayer.wms('https://geonode.communitygis.in/geoserver/wms', {
-                                        layers: layer,
-                                        format: 'image/png',
-                                        transparent: 'true',
-                                    });
-                                    wms_layer.addTo(mymap);
-                                    newLayerList.push(wms_layer);
+  function putWMS(layer) {
+      var wms_layer = L.tileLayer.wms('https://geonode.communitygis.in/geoserver/wms', {
+          layers: layer,
+          format: 'image/png',
+          transparent: 'true',
+      });
+      wms_layer.addTo(mymap);
+      newLayerList.push(wms_layer);
 
-                                    if (wms_legend) {
-                                        mymap.removeControl(wms_legend);
-                                    }
-                                    //console.log(wms_legend); 
-                                    addWMSLegend(layer);
-                                    TRIBLAYER = "https://geonode.communitygis.in/geoserver/geonode/wms?SERVICE=WMS&VERSION=1.3.0&REQUEST=GetFeatureInfo&LAYERS=" + wms_layer.options.layers + "&QUERY_LAYERS=" + wms_layer.options.layers;
+      if (wms_legend) {
+          mymap.removeControl(wms_legend);
+      }
+      //console.log(wms_legend); 
+      addWMSLegend(layer);
+      TRIBLAYER = "https://geonode.communitygis.in/geoserver/geonode/wms?SERVICE=WMS&VERSION=1.3.0&REQUEST=GetFeatureInfo&LAYERS=" + wms_layer.options.layers + "&QUERY_LAYERS=" + wms_layer.options.layers;
 
 
-                                }
+  }
 
-                                    
-                                function clear_layer() {
-                                    LayerList.forEach(layer => mymap.removeLayer(layer));
+      
+  function clear_layer() {
+      LayerList.forEach(layer => mymap.removeLayer(layer));
 
-                                }
+  }
+  function clear_GCPlayer() {
+      gcpLayerList.forEach(layer => mymap.removeLayer(layer));
 
-                                function clear_distlayer() {
-                                    distLayerList.forEach(layer => mymap.removeLayer(layer));
+  }
 
-                                }
+  function clear_distlayer() {
+      distLayerList.forEach(layer => mymap.removeLayer(layer));
 
-                                
+  }
                     
 </script>
-
-
-
-
-
 
 
 
@@ -1834,15 +807,7 @@ function putWMSLayer() {
     const url = 'https://geonode.communitygis.in/geoserver/ows?service=WFS&version=1.0.0&request=GetFeature&typename=geonode%3Aposhan_dummy&outputFormat=json&srs=EPSG%3A4326&srsName=EPSG%3A4326&access_token=3r7XCeWunHUOfoyqPxnUNt7XY7ZWHu'
     const url1 = 'https://geonode.communitygis.in/geoserver/ows?service=WFS&version=1.0.0&request=GetFeature&typename=geonode%3AOrganization_wise_Compendium&outputFormat=json&srs=EPSG%3A4326&srsName=EPSG%3A4326&access_token=3r7XCeWunHUOfoyqPxnUNt7XY7ZWHu'
 
-    // L.tileLayer('https://api.mapbox.com/styles/v1/{id}/tiles/{z}/{x}/{y}?access_token=pk.eyJ1IjoibWFwYm94IiwiYSI6ImNpejY4NXVycTA2emYycXBndHRqcmZ3N3gifQ.rJcFIG214AriISLbB6B5aw', {
-		// maxZoom: 18,
-		// attribution: 'Map data &copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors, ' +
-		// 	'Imagery © <a href="https://www.mapbox.com/">Mapbox</a>',
-		// id: 'mapbox/streets-v11',
-		// tileSize: 512,
-		// zoomOffset: -1
-    // }).addTo(mymap);
-    
+  
     console.log('l/tilelayer');
     var wms = L.tileLayer.wms('https://geonode.communitygis.in/geoserver/wms', {
 				//layer: layer,
@@ -1851,6 +816,7 @@ function putWMSLayer() {
 				format: 'image/png',
         // tileSize: 512,
 				transparent: 'true',
+        
 			});
       wms.addTo(mymap);
       //console.log(layers);
@@ -1934,73 +900,6 @@ function putWMSLayer() {
 
 
 
-
-
-//----- add legends to map
-
-//   var legend = L.control({position: 'bottomright'});
-
-// legend.onAdd = function (mymap) {
-//   var pvIcon1 = L.icon({
-//          iconUrl: "{% static 'map/images/coal_india_icon.png' %}",
-//          iconSize:     [40, 40], // size of the icon
-//          //shadowSize:   [50, 64], // size of the shadow
-//         //  iconAnchor:   [25,10], // point of the icon which will correspond to marker's location
-//          // shadowAnchor: [4, 62],  // the same for the shadow
-//         //  popupAnchor:  [0, 0] // point from which the popup should open relative to the iconAnchor
-//      });
-//     var div = L.DomUtil.create('div', 'info legend'),
-//         grades = ["Default", "States","District","Sector"],
-//         labels = ["{% static 'map/images/coal_india_icon.png' %}","{% static 'map/images/coal_india_state.png' %}","{% static 'map/images/coal_india_district.png' %}","{% static 'map/images/coal_india_sector.png' %}"];
-//         // labels = [pvIcon1,iconState,iconDistrict,iconSector];
-//     // loop through our density intervals and generate a label with a colored square for each interval
-//     for (var i = 0; i < grades.length; i++) {
-//         div.innerHTML +=
-//             grades[i] + (" <img src="+ labels[i] +" height='2' width='1' size=>") +'<br>';
-//     }
-
-//     return div;
-//     console.log(div);
-// };
-
-// legend.addTo(mymap);
-
-// var legend = L.control({position: 'bottomright'});
-
-// legend.onAdd = function (mymap) {
-    
-//     var div = L.DomUtil.create('div', 'info legend'),
-//         grades = [1,2,3,4,5],
-//         labels = ['All','State','District','Sector','Financial Year'];
-
-//     // loop through our density intervals and generate a label with a colored square for each interval
-//     div.innerHTML += "<h4>Legend</h4><hr>";
-//     for (var i = 0; i < grades.length; i++) {
-//         div.innerHTML +=
-//             '<i class="circle" style="background:' + getColor(grades[i]) + '"></i> ' +
-//              ':' + (labels[i]) + '<br>';
-//     }
-    
-//     //6- 1 state  2- 2 district
-//     function getColor(d) {
-//         return d ==1 ? '#000000' :
-//                d ==2 ? '#ff0000' :
-//                d ==3  ? '#00ff00' :
-//                d ==4  ? '#006400' :
-//                d ==5  ? '#0000ff':
-//                d == 6 ? '#d35018':
-//                d == 7 ? '#c9626e':
-//                d == 8 ? '#b7d811':
-//                d == 9 ? '#b97ae3':
-//                d == 10 ? '#6eb9db':
-//                d == 11 ? '#18f079':
-//                d == 12 ? '#71e71d':
-//                d == 13 ? '#c976c8':
-//                '#FFEDA0';
-//     }
-// return div;
-// }
-// legend.addTo(mymap);
 </script>
 	
    <style>
@@ -2031,266 +930,14 @@ function putWMSLayer() {
          
 
 
-<!-- coal -->
-
-<script>
-  
-  var pvIcon = L.icon({
-         iconUrl: "{% static 'map/images/Coal_India_Logo.png' %}",
-         iconSize:     [40, 40], // size of the icon
-         //shadowSize:   [50, 64], // size of the shadow
-         iconAnchor:   [25,10], // point of the icon which will correspond to marker's location
-         // shadowAnchor: [4, 62],  // the same for the shadow
-         popupAnchor:  [0, 0] // point from which the popup should open relative to the iconAnchor
-     });
-
-   var coalGroup = L.layerGroup();
-</script>
-  
-
-<!-- coal form -->
-
-<script>
-  
-  var pvIcon1 = L.icon({
-         iconUrl: "{% static 'map/images/coal_india_icon.png' %}",
-         iconSize:     [40, 40], // size of the icon
-         //shadowSize:   [50, 64], // size of the shadow
-         iconAnchor:   [25,10], // point of the icon which will correspond to marker's location
-         // shadowAnchor: [4, 62],  // the same for the shadow
-         popupAnchor:  [0, 0] // point from which the popup should open relative to the iconAnchor
-     });
-
-   var coalGroup1 = L.layerGroup();
-</script>
-  
-{% for i in coalform %}
-<script>
-   //  alert("in vatikas -" +i+"- "+ +i.nutri_nm) 
-
- var table4 = 
-      
-      `<table class="w3-table" id="popup" style="font-size:12px; align:center;" >
-        <tbody>
-      
-        {% if i.project_name %}
-        <tr>
-            <th><b>Project name</b></th>
-            <th><b>{{ i.project_name}}</b></th>
-        </tr>
-        {% endif %}
-        
-        {% if i.inputState %}
-        <tr>
-          <td>State</td>
-          <td>{{ i.inputState}}</td>
-        </tr>
-        {% endif %}
-        {% if i.inputDistrict %}
-        <tr>
-          <td>District</td>
-          <td>{{ i.inputDistrict }}</td>
-        </tr>
-        {% endif %}
-        {% if i.agencytype %}
-        <tr>
-          <td>Implementing Agency</td>
-          <td>{{ i.agencytype}}</td>
-        </tr>
-        {% endif %}
-        
-        {% if i.Projectstatus %}
-        <tr>
-          <td>Project Status</td>
-          <td>{{ i.Projectstatus }}</td>
-        </tr>
-        {% endif %}
-        
-        <tr>
-          {% if i.commpendium %}
-            <td><a href="{{ i.commpendium.url }}" target = "_app"><img src="../static/map/images/icons8-pdf-40.png" style="height:48;width:48" /></a></td>
-            
-             
-          {% endif %}
-          {% if i.picture %}
-            <td><a href="{{ i.picture.url }}" class = "popupimage2" target = "_app"><img src="../static/map/images/icons8-image-48.png" style="height:48;width:48" /></a></td>
-          {% else %}
-            <td><img src="../static/map/images/icons8-image-48.png" style="height:48;width:48" /></td>
-          
-          
-            {% endif %}  
-          
-            <td><a href="download/{{ i.id }}"><img src="../static/map/images/icons8-microsoft-excel-48.png" style="height:48;width:48" /></a></td>
-             
-          
-          
-          </tr>  
-      </tbody>
- </table>
- 
- </br>`
- var table5 = 
-      
-      `<table class="w3-table" id="table" style="font-size:12px; align:center;" >
-        <tbody>
-      
-        {% if i.project_name %}
-        <tr>
-            <th><b>Project name</b></th>
-            <th><b>{{ i.project_name}}</b></th>
-        </tr>
-        {% endif %}
-        
-        {% if i.sector %}
-        <tr>
-            <th><b>Sector</b></th>
-            <th><b>{{ i.sector}}</b></th>
-        </tr>
-        {% endif %}
-        {% if i.inputState %}
-        <tr>
-          <td>State</td>
-          <td>{{ i.inputState}}</td>
-        </tr>
-        {% endif %}
-        {% if i.inputDistrict %}
-        <tr>
-          <td>District</td>
-          <td>{{ i.inputDistrict }}</td>
-        </tr>
-        {% endif %}
-        {% if i.lat %}
-        <tr>
-          <td>Latitude</td>
-          <td>{{ i.lat }}</td>
-        </tr>
-        {% endif %}
-        {% if i.lng %}
-        <tr>
-          <td>Longitude</td>
-          <td>{{ i.lng }}</td>
-        </tr>
-        {% endif %}
-        fy
-        {% if i.fy %}
-        <tr>
-          <td>FY</td>
-          <td>{{ i.fy }}</td>
-        </tr>
-        {% endif %}
-        {% if i.Projectstatus %}
-        <tr>
-          <td>Project Status</td>
-          <td>{{ i.Projectstatus }}</td>
-        </tr>
-        {% endif %}
-        {% if i.agencytype %}
-        <tr>
-          <td>Implementing Agency</td>
-          <td>{{ i.agencytype}}</td>
-        </tr>
-        {% endif %}
-        
-        {% if i.organisation_name %}
-        <tr>
-          <td>Implementing Agency Name</td>
-          <td>{{ i.organisation_name}}</td>
-        </tr>
-        {% endif %}
-        {% if i.request_amount %}
-        <tr>
-          <td>Requested Amount</td>
-          <td>{{ i.request_amount}}</td>
-        </tr>
-        {% endif %}
-        {% if i.approved_amount %}
-        <tr>
-          <td>Approved Amount</td>
-          <td>{{ i.approved_amount}}</td>
-        </tr>
-        {% endif %}
-        
-        <tr>
-          {% if i.commpendium %}
-          <td>Compendium</td>
-            <td>{{ i.commpendium.url }}</td>
-            
-             
-          {% endif %}
-          {% if i.picture %}
-            <td>Picture</td>
-            <td>{{ i.picture.url }}</td>
-          
-            {% endif %}  
-            <td><a href="#"><img src="../static/map/images/icons8-microsoft-excel-48.png" onclick="exportData()"/></a></td>
-            
-          </tr>  
-      </tbody>
- </table>
- </br>
- 
- `
-
-//  console.log(table5);
-    var popupOptions =
-     {
-       'maxWidth': '500',
-       'className' : 'another-popup' // classname for another popup
-     }
-
-    //  console.log("markerlist in sector:",markerlist);
-    // // debugger;
-    // clear_marker();
-    // console.log(markerlist);
-     var marker = L.marker(["{{ i.lat }}", "{{ i.lng }}"], {icon:pvIcon1}).addTo(mymap).bindPopup(table4, popupOptions);
-    //  coalGroup1.addLayer(marker);
-    marker.addTo(mymap);
-      markerlist.push(marker);
-      console.log(markerlist);
-     // Added  hover to open popups
-    //  marker.on('mouseover', function (e) {
-    //        this.openPopup(e.latlng);
-    //    });
-    //  marker.on('mouseout', function (e) {
-    //        this.openPopup(e.latlng);
-    //  });
-     marker.on('click', function (e) {
-           this.openPopup(e.latlng);
-     });
-
-     mymap.on ({
-         click: function() {
-             isClicked = false
-         },
-         popupclose: function () {
-             isClicked = false
-         }
-     })
-
-     
-
- </script>
-{% endfor %}
-
-
-
-  <style>
-  .another-popup .leaflet-popup-content-wrapper .leaflet-popup-content{
-      width: 400px;
-      height:auto;
-    }
-
-  </style>
-  
-
 
 <script>
   
   var overlays = {
         //"States":indiaState,
         "Districts":indiaDistrict,
-        "Maharashtra Highways":mahaHighways,
-        "Maharashtra Schools":mahaSchools,
+        // "Maharashtra Highways":mahaHighways,
+        // "Maharashtra Schools":mahaSchools,
         // "Coal India Projects":coalGroup,
         // "Coal Form":coalGroup1
 	};
@@ -2304,190 +951,4 @@ document.addEventListener('DOMContentLoaded', () => {
 });
 
 </script>
-
-
-{% for i in coalform %}
-<script src=”jquery.min.js” type=”text/javascript”></script>
-
-    <script src=”table2excelmodified.js” type=”text/javascript”></script>
-<script>
-            
-  // $(document).ready(function() {
-
-  //     });
-
-  
-  function exportData(){
-      /* Get the HTML data using Element by Id */
-      var table = document.getElementById("popup");
-      console.log(table);
-//       table5 = 
-      
-//       `<table class="w3-table" id="table" style="font-size:12px; align:center;" >
-//         <tbody>
-      
-//         {% if i.project_name %}
-//         <tr>
-//             <th><b>Project name</b></th>
-//             <th><b>{{ i.project_name}}</b></th>
-//         </tr>
-//         {% endif %}
-        
-//         {% if i.sector %}
-//         <tr>
-//             <th><b>Sector</b></th>
-//             <th><b>{{ i.sector}}</b></th>
-//         </tr>
-//         {% endif %}
-//         {% if i.inputState %}
-//         <tr>
-//           <td>State</td>
-//           <td>{{ i.inputState}}</td>
-//         </tr>
-//         {% endif %}
-
-//         {% if i.inputDistrict %}
-//         <tr>
-//           <td>District</td>
-//           <td>{{ i.inputDistrict }}</td>
-//         </tr>
-//         {% endif %}
-//         {% if i.lat %}
-//         <tr>
-//           <td>Latitude</td>
-//           <td>{{ i.lat }}</td>
-//         </tr>
-//         {% endif %}
-//         {% if i.lng %}
-//         <tr>
-//           <td>Longitude</td>
-//           <td>{{ i.lng }}</td>
-//         </tr>
-//         {% endif %}
-        
-//         {% if i.fy %}
-//         <tr>
-//           <td>FY</td>
-//           <td>{{ i.fy }}</td>
-//         </tr>
-//         {% endif %}
-//         {% if i.Projectstatus %}
-//         <tr>
-//           <td>Project Status</td>
-//           <td>{{ i.Projectstatus }}</td>
-//         </tr>
-//         {% endif %}
-//         {% if i.agencytype %}
-//         <tr>
-//           <td>Implementing Agency</td>
-//           <td>{{ i.agencytype}}</td>
-//         </tr>
-//         {% endif %}
-        
-//         {% if i.organisation_name %}
-//         <tr>
-//           <td>Implementing Agency Name</td>
-//           <td>{{ i.organisation_name}}</td>
-//         </tr>
-//         {% endif %}
-//         {% if i.request_amount %}
-//         <tr>
-//           <td>Requested Amount</td>
-//           <td>{{ i.request_amount}}</td>
-//         </tr>
-//         {% endif %}
-//         {% if i.approved_amount %}
-//         <tr>
-//           <td>Approved Amount</td>
-//           <td>{{ i.approved_amount}}</td>
-//         </tr>
-//         {% endif %}
-        
-        
-//         {% if i.commpendium %}
-//         <tr>
-//           <td>Compendium</td>
-//           <td>{{ i.commpendium.url }}</td>
-//         </tr>    
-             
-//         {% endif %}
-//         {% if i.picture %}
-//         <tr>
-//           <td>Picture</td>
-//           <td>{{ i.picture.url }}</td>
-//         </tr>  
-//         {% endif %}  
-            
-          
-//       </tbody>
-//  </table>
-//  </br>`    
-      
-
-//  $("#table").table2excel({
-     
-//                 filename: "Table.xls"
-//             });
-            // table5.table2excel({
-            //   filename: "tab.xls"
-            // });
-//  var tab = document.getElementById("table");
-//   console.log(tab);
-//   //  var table = document.getElementById("table");
-    //  console.log(table5);
-      /* Declaring array variable */
-      var rows =[];
-  // var count = table5.rows.count;
-  // console.log(count);
-      //iterate through rows of table
-      for(var i=0,row; row = table.rows[i];i++){
-          //rows would be accessed using the "row" variable assigned in the for loop
-          //Get each cell value/column from the row
-          column1 = row.cells[0].innerText;
-          
-          // column1 = document.getElementById("comment[i]").value;
-          // alert(column1);
-          column2 = row.cells[1].innerText;
-          // column3 = row.cells[2].innerText;
-          // column4 = row.cells[3].innerText;
-          // alert(column1);
-          // column15 = row.cells[14].innerText;
-          // column16 = row.cells[15].innerText;
-          // column17 = row.cells[16].innerText;
-      /* add a new records in the array */  
-          // column11 = column11.replace(/,/g, '.') 
-
-          rows.push(
-              [
-                  column1,
-                  column2,
-                  // column3,
-                  // column4,
-                  // column5,
-                  // column6,
-                  // column7,column8,column9,column10,column11,column12,column13,column14
-                  // // column15,column16,column17
-              ]
-          );
-  
-      }
-      csvContent = "data:text/csv;charset=utf-8,";
-      /* add the column delimiter as comma(,) and each row splitted by new line character (\n) */
-      rows.forEach(function(rowArray){
-          row = rowArray.join(",");
-          csvContent += row + "\r\n";
-      });
-
-      /* create a hidden <a> DOM node and set its download attribute */
-      var encodedUri = encodeURI(csvContent);
-      var link = document.createElement("a");
-      link.setAttribute("href", encodedUri);
-      link.setAttribute("download", "Download.csv");
-      document.body.appendChild(link);
-      /* download the data file named "Stock_Price_Report.csv" */
-      link.click();
-}
-
-</script> 
-{% endfor %}
 {% endblock map%}
